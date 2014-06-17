@@ -164,6 +164,7 @@ if [ "$PS1" ]; then
   export PS1=$BROWN'\W'$CYAN'$(__git_ps1 " (%s)")'$BROWN'$'$NONE" "
 fi
 
-# Source the Homeshick scripts
+# Source the Homeshick scripts, and make sure we're synced up
 source "$HOME/.homesick/repos/homeshick/homeshick.sh"
 source "$HOME/.homesick/repos/homeshick/completions/homeshick-completion.bash"
+homeshick --quiet refresh
