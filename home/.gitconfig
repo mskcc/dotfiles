@@ -13,7 +13,7 @@
     editor = vim
 [receive]
     denyNonFastForwards = 0
-[aliases]
+[alias]
     cp = cherry-pick
     st = status -s
     cl = clone
