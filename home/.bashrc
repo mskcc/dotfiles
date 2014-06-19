@@ -5,7 +5,7 @@
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
-      *) return;;
+    *) return;;
 esac
 
 # don't put duplicate lines or lines starting with space in the history.
@@ -25,7 +25,7 @@ shopt -s checkwinsize
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
-#shopt -s globstar
+shopt -s globstar
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -34,34 +34,6 @@ shopt -s checkwinsize
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
-
-# set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-    xterm-color) color_prompt=yes;;
-esac
-
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-#force_color_prompt=yes
-
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
-    else
-	color_prompt=
-    fi
-fi
-
-if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-fi
-unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
@@ -106,47 +78,20 @@ fi
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-  fi
+    if [ -f /usr/share/bash-completion/bash_completion ]; then
+        . /usr/share/bash-completion/bash_completion
+    elif [ -f /etc/bash_completion ]; then
+        . /etc/bash_completion
+    fi
 fi
-
-######################################################################
-# Everything above is from the default .bashrc. Below are my additions
-######################################################################
 
 # Ask for confirmation before removing or overwriting stuff
 alias rm='rm -i'
 alias mv='mv -i'
 alias cp='cp -i'
 
-# See the raw control characters for colored text
-alias less='less -R'
-
-# No one is going to mess with your work (on purpose). So at least give r/w access to your group
-umask 002
-
-# Limit the size of core dump files cuz they can fill up my home dir quota
+# Limit the size of core dump files cuz they can fill up home dir quotas
 ulimit -c 0
-
-# Some customized parameters for the less command
-export LESS=-eiMXR
-
-# A function that sources all .sh files within a given directory
-function load_dir {
-   LOAD_DIR=${1}
-   if [ -d $LOAD_DIR -a -r $LOAD_DIR -a -x $LOAD_DIR ]; then
-       local i
-       for i in $(find -L $LOAD_DIR -name '*.sh'); do
-           source $i
-       done
-   fi
-}
-
-# Source all .sh files in directory .bashrc.d
-load_dir ~/.bashrc.d
 
 # This prevents me from accidentally closing the terminal with Ctrl+D
 set -o ignoreeof
@@ -154,17 +99,37 @@ set -o ignoreeof
 # This prevents me from accidentally overwriting a file with I/O redirects
 set -o noclobber
 
+# Some customized parameters for the less command
+export LESS=-eiMXR
+
+# A function that sources all .sh files within a given directory
+function load_dir {
+    LOAD_DIR=${1}
+    if [ -d $LOAD_DIR -a -r $LOAD_DIR -a -x $LOAD_DIR ]; then
+        local i
+        for i in $(find -L $LOAD_DIR -name '*.sh'); do
+            source $i
+        done
+    fi
+}
+
+# Source all .sh files in directory .bashrc.d
+load_dir ~/.bashrc.d
+
 # Intuitive color schemes for git repositories
 if [ "$PS1" ]; then
-  # Add some color
-  CYAN="\[\033[0;36m\]"
-  BROWN="\[\033[0;33m\]"
-  NONE="\[\e[m\]"
-  export PS1R="${BROWN}\W\$${NONE} "
-  export PS1=$BROWN'\W'$CYAN'$(__git_ps1 " (%s)")'$BROWN'$'$NONE" "
+    # Add some color
+    CYAN="\[\033[0;36m\]"
+    BROWN="\[\033[0;33m\]"
+    NONE="\[\e[m\]"
+    export PS1R="${BROWN}\W\$${NONE} "
+    export PS1=$BROWN'\W'$CYAN'$(__git_ps1 " (%s)")'$BROWN'$'$NONE" "
 fi
 
+
 # Source the Homeshick scripts, and make sure we're synced up
-source "$HOME/.homesick/repos/homeshick/homeshick.sh"
-source "$HOME/.homesick/repos/homeshick/completions/homeshick-completion.bash"
-homeshick --quiet refresh
+if [ -d "$HOME/.homesick/repos/homeshick" ]; then
+    source "$HOME/.homesick/repos/homeshick/homeshick.sh"
+    source "$HOME/.homesick/repos/homeshick/completions/homeshick-completion.bash"
+    homeshick --quiet refresh
+fi
