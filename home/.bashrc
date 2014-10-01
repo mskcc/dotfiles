@@ -123,7 +123,6 @@ fi
 # Source the Homeshick scripts, and make sure all the castles are synced up
 if [ -d "$HOME/.homesick/repos/homeshick" ]; then
     source "$HOME/.homesick/repos/homeshick/homeshick.sh"
-    source "$HOME/.homesick/repos/homeshick/completions/homeshick-completion.bash"
     homeshick --quiet --force refresh
     homeshick --quiet --force link
 fi
