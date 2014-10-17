@@ -25,3 +25,8 @@ fi
 if [ -d "$HOME/perl5" ]; then
     export PERL5LIB="$HOME/perl5/lib/perl5:$HOME/perl5/lib/perl5/site_perl"
 fi
+
+# Set up Perlbrew if found in the expected folder
+if [ -d "$HOME/perl5/perlbrew" ]; then
+    source $HOME/perl5/perlbrew/etc/bashrc
+fi

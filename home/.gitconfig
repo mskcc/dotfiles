@@ -14,7 +14,7 @@
 [receive]
     denyNonFastForwards = 0
 [push]
-    default = simple
+    #default = simple
 [alias]
     cp = cherry-pick
     st = status -s
