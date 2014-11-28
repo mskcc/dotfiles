@@ -126,11 +126,11 @@ if [ -d "$HOME/.homesick/repos/homeshick" ]; then
 fi
 
 # Update PATH for the Google Cloud SDK
-if [ -d "$HOME/google-cloud-sdk/path.bash.inc" ]; then
+if [ -f "$HOME/google-cloud-sdk/path.bash.inc" ]; then
     source "$HOME/google-cloud-sdk/path.bash.inc"
 fi
 
 # Enable bash completion for gcloud
-if [ -d "$HOME/google-cloud-sdk/completion.bash.inc" ]; then
+if [ -f "$HOME/google-cloud-sdk/completion.bash.inc" ]; then
     source "$HOME/google-cloud-sdk/completion.bash.inc"
 fi
