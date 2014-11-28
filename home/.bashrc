@@ -126,7 +126,7 @@ if [ -d "$HOME/.homesick/repos/homeshick" ]; then
 fi
 
 # Update PATH for the Google Cloud SDK
-if [ -d "$HOME/opt/google-cloud-sdk/path.bash.inc" ]; then
+if [ -d "$HOME/google-cloud-sdk/path.bash.inc" ]; then
     source "$HOME/google-cloud-sdk/path.bash.inc"
 fi
 
