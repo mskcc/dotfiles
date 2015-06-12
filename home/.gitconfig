@@ -3,7 +3,7 @@
     email = ckandoth@gmail.com
 [color]
     status = auto
-    diff = auto 
+    diff = auto
     branch = auto
     interactive = auto
 [merge]
@@ -46,3 +46,5 @@
     lt = describe --tags --abbrev=0
     ours = "!f() { git co --ours $@ && git add $@; }; f"
     theirs = "!f() { git co --theirs $@ && git add $@; }; f"
+[credential]
+    helper = cache --timeout=10800
