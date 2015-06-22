@@ -20,6 +20,9 @@ fi
 if [ -d "$HOME/bin" ]; then
     PATH="$HOME/bin:$PATH"
 fi
+if [ -d "$HOME/local/bin" ]; then
+    PATH="$HOME/local/bin:$PATH"
+fi
 
 # Add local Perl libraries to $PERL5LIB if found
 if [ -d "$HOME/perl5" ]; then
