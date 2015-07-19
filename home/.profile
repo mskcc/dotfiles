@@ -24,6 +24,11 @@ if [ -d "$HOME/local/bin" ]; then
     PATH="$HOME/local/bin:$PATH"
 fi
 
+# Set PATH to include MSKCC's private bin if found
+if [ -d "/opt/common/CentOS_6/bin/current" ]; then
+    PATH="/opt/common/CentOS_6/bin/current:$PATH"
+fi
+
 # Add local Perl libraries to $PERL5LIB if found
 if [ -d "$HOME/perl5" ]; then
     export PERL5LIB="$HOME/perl5/lib/perl5:$HOME/perl5/lib/perl5/site_perl"
