@@ -23,6 +23,9 @@ fi
 if [ -d "$HOME/local/bin" ]; then
     PATH="$HOME/local/bin:$PATH"
 fi
+if [ -d "$HOME/.local/bin" ]; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
 
 # Set PATH to include MSKCC's private bin if found
 if [ -d "/opt/common/CentOS_6/bin/current" ]; then
