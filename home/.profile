@@ -20,16 +20,10 @@ fi
 if [ -d "$HOME/bin" ]; then
     PATH="$HOME/bin:$PATH"
 fi
-if [ -d "$HOME/local/bin" ]; then
-    PATH="$HOME/local/bin:$PATH"
-fi
-if [ -d "$HOME/.local/bin" ]; then
-    PATH="$HOME/.local/bin:$PATH"
-fi
 
 # Set PATH to include MSKCC's private bin if found
-if [ -d "/opt/common/CentOS_6/bin/current" ]; then
-    PATH="/opt/common/CentOS_6/bin/current:$PATH"
+if [ -d "/opt/common/CentOS_6-dev/bin/current" ]; then
+    PATH="/opt/common/CentOS_6-dev/bin/current:$PATH"
 fi
 
 # Add local Perl libraries to $PERL5LIB if found
