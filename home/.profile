@@ -29,6 +29,11 @@ if [ -d "/opt/common/CentOS_6-dev/bin/current" ]; then
     PATH="/opt/common/CentOS_6-dev/bin/current:$PATH"
 fi
 
+# Set PATH to include MSKCC's python bin if found
+if [ -d "/opt/common/CentOS_6-dev/python/python-2.7.10/bin" ]; then
+    PATH="/opt/common/CentOS_6-dev/python/python-2.7.10/bin:$PATH"
+fi
+
 # Add local Perl libraries to $PERL5LIB if found
 if [ -d "$HOME/perl5" ]; then
     export PERL5LIB="$HOME/perl5/lib/perl5:$HOME/perl5/lib/perl5/site_perl"
