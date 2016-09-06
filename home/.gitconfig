@@ -1,6 +1,6 @@
 [user]
-    name = Cyriac Kandoth
-    email = ckandoth@gmail.com
+    name = 
+    email = 
 [color]
     status = auto
     diff = auto
@@ -14,7 +14,7 @@
 [receive]
     denyNonFastForwards = 0
 [push]
-    default = simple
+    default = current
 [alias]
     cp = cherry-pick
     st = status -s
