@@ -12,7 +12,7 @@ To install homeshick into a fresh *nix home directory:
 
 Clone and symlink the dotfiles from this repo. `homeshick` will prompt you to replace existing dotfiles like `.profile` and `.bashrc`, so make sure you backup your files as needed, before you proceed:
 
-    $HOME/.homesick/repos/homeshick/bin/homeshick clone -f ckandoth/dotfiles
+    $HOME/.homesick/repos/homeshick/bin/homeshick clone -f mskcc/dotfiles
     source $HOME/.profile
 
 Personalize
