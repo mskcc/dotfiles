@@ -87,6 +87,9 @@ alias cp='cp -i'
 # Limit the size of core dump files cuz they can fill up home dir quotas
 ulimit -c 0
 
+# Override the default umask with something that's friendlier to your lab mates
+umask 002
+
 # This prevents me from accidentally closing the terminal with Ctrl+D
 set -o ignoreeof
 
