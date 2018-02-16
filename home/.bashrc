@@ -7,38 +7,24 @@ case $- in
     *) return;;
 esac
 
-# don't put duplicate lines or lines starting with space in the history
+# Don't put duplicate lines or lines starting with space in the history
 HISTCONTROL=ignoreboth
 
-# append to the history file, don't overwrite it
+# Append to the history file, don't overwrite it
 shopt -s histappend
 
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+# For setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=2000
 HISTFILESIZE=5120
 
-# check the window size after each command and, if necessary,
+# Check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-# make less more friendly for non-text input files, see lesspipe(1)
+# Make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
-fi
-
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
-esac
-
-# enable color support of ls and also add handy aliases
+# Enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
@@ -47,28 +33,20 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-# some more ls aliases
+# Some more ls aliases
 alias ll='ls -hlF'
 alias la='ls -A'
 alias l='ls -CF'
 
-# an alias that helps view tab-delimited data
+# An alias that helps view tab-delimited data
 alias lc="sed ':x s/\(^\|\t\)\t/\1 \t/; t x' | column -ts$'\t' | less -SFX"
 
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
+# Pull more aliases from .bash_aliases if found
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-# enable programmable completion features (you don't need to enable
+# Enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if ! shopt -oq posix; then
@@ -110,17 +88,18 @@ function load_dir {
     fi
 }
 
-# Source all .sh files in directory .bashrc.d
-load_dir ~/.bashrc.d
+# Source all .sh files in directory .bashrc.d if found and change the prompt
+if [ -d "$HOME/.bashrc.d" ]; then
+    load_dir $HOME/.bashrc.d
 
-# Intuitive color schemes for git repositories
-if [ "$PS1" ]; then
-    # Add some color
-    CYAN="\[\033[0;36m\]"
-    BROWN="\[\033[0;33m\]"
-    NONE="\[\e[m\]"
-    export PS1R="${BROWN}\W\$${NONE} "
-    export PS1=$BROWN'\W'$CYAN'$(__git_ps1 " (%s)")'$BROWN'$'$NONE" "
+    # Intuitive color schemes for git repositories
+    if [ "$PS1" ]; then
+        CYAN="\[\033[0;36m\]"
+        BROWN="\[\033[0;33m\]"
+        NONE="\[\e[m\]"
+        export PS1R="${BROWN}\W\$${NONE} "
+        export PS1=$BROWN'\W'$CYAN'$(__git_ps1 " (%s)")'$BROWN'$'$NONE" "
+    fi
 fi
 
 # Source the Homeshick scripts, and make sure all the castles are synced up

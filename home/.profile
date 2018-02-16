@@ -11,31 +11,6 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-# Set PATH to include user's private bins if they exist
-if [ -d "$HOME/bin" ]; then
-    PATH="$HOME/bin:$PATH"
-fi
-if [ -d "$HOME/.local/bin" ]; then
-    PATH=:"$HOME/.local/bin:$PATH"
-fi
-
-# Set up Pyenv if found in the expected folder
-if [ -d "$HOME/.pyenv" ]; then
-    export PYENV_ROOT=$HOME/.pyenv
-    export PATH=$PYENV_ROOT/bin:$PATH
-    eval "$(pyenv init -)"
-fi
-
-# Set up Perlbrew if found in the expected folder
-if [ -d "$HOME/perl5/perlbrew" ]; then
-    source $HOME/perl5/perlbrew/etc/bashrc
-fi
-
-# Add local Perl libraries to $PERL5LIB if found
-if [ -d "$HOME/perl5" ]; then
-    export PERL5LIB="$HOME/perl5/lib/perl5:$HOME/perl5/lib/perl5/site_perl"
-fi
-
 # Set PATH to include MSKCC's private bin if found
 if [ -d "/opt/common/CentOS_6-dev/bin/current" ]; then
     PATH="/opt/common/CentOS_6-dev/bin/current:$PATH"
@@ -44,4 +19,18 @@ fi
 # Set PATH to include MSKCC's python bin if found
 if [ -d "/opt/common/CentOS_6-dev/python/python-2.7.10/bin" ]; then
     PATH="/opt/common/CentOS_6-dev/python/python-2.7.10/bin:$PATH"
+fi
+
+# Configure Roslin, if its settings are found in the expected folder
+if [ -f "/ifs/work/pi/roslin-core/2.0.0/config/settings.sh" ]; then
+    source /ifs/work/pi/roslin-core/2.0.0/config/settings.sh
+    export PATH=${ROSLIN_CORE_BIN_PATH}:$PATH
+    export TOIL_LSF_ARGS="-sla Haystack -S 1"
+fi
+
+# Use /scratch/username instead of /tmp if /scratch disk is found
+if [ -d "/scratch" ]; then
+    mkdir -p /scratch/$USER
+    export TMP=/scratch/$USER
+    export TMPDIR=/scratch/$USER
 fi
