@@ -13,17 +13,18 @@ fi
 
 # Set PATH to include MSKCC's private bin if found
 if [ -d "/opt/common/CentOS_6-dev/bin/current" ]; then
-    PATH="/opt/common/CentOS_6-dev/bin/current:$PATH"
+    export PATH=/opt/common/CentOS_6-dev/bin/current:$PATH
 fi
 
 # Set PATH to include MSKCC's python bin if found
 if [ -d "/opt/common/CentOS_6-dev/python/python-2.7.10/bin" ]; then
-    PATH="/opt/common/CentOS_6-dev/python/python-2.7.10/bin:$PATH"
+    export PATH=/opt/common/CentOS_6-dev/python/python-2.7.10/bin:$PATH
 fi
 
-# Configure Roslin, if its settings are found in the expected folder
-if [ -f "/ifs/work/pi/roslin-core/2.0.0/config/settings.sh" ]; then
-    source /ifs/work/pi/roslin-core/2.0.0/config/settings.sh
+# Configure Roslin, if its settings are found in the expected folders
+if [ -f "/ifs/work/pi/roslin-core/2.0.2/config/settings.sh" ]; then
+    source /ifs/work/pi/roslin-core/2.0.2/config/settings.sh
+    source /ifs/work/pi/roslin-core/2.0.2/config/variant/2.2.0/settings.sh
     export PATH=${ROSLIN_CORE_BIN_PATH}:$PATH
     export TOIL_LSF_ARGS="-sla Haystack -S 1"
 fi
@@ -33,4 +34,9 @@ if [ -d "/scratch" ]; then
     mkdir -p /scratch/$USER
     export TMP=/scratch/$USER
     export TMPDIR=/scratch/$USER
+fi
+
+# Reference newer gcc libraries if found
+if [ -d "/opt/common/CentOS_6/gcc/gcc-4.9.3/lib64" ]; then
+    export LD_LIBRARY_PATH=/opt/common/CentOS_6/gcc/gcc-4.9.3/lib64:$LD_LIBRARY_PATH
 fi
