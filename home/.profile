@@ -40,3 +40,10 @@ fi
 if [ -d "/opt/common/CentOS_6/gcc/gcc-4.9.3/lib64" ]; then
     export LD_LIBRARY_PATH=/opt/common/CentOS_6/gcc/gcc-4.9.3/lib64:$LD_LIBRARY_PATH
 fi
+
+# Load NVM and bash completion if found
+if [ -d "/opt/common/CentOS_6-dev/nvm/v0.33.9" ]; then
+    export NVM_DIR=/opt/common/CentOS_6-dev/nvm/v0.33.9
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+fi
